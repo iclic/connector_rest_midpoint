@@ -13,14 +13,35 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.evolveum.polygon.connector.example.rest;
+package com.evolveum.polygon.connector.myapi;
+
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
+import java.util.*;
 
 import java.net.URI;
 import java.net.URISyntaxException;
 
+import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
-import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.*;
+
 import org.apache.http.client.utils.URIBuilder;
+import org.apache.http.entity.ByteArrayEntity;
+import org.apache.http.util.EntityUtils;
+
+import org.identityconnectors.common.Base64;
+import org.identityconnectors.common.StringUtil;
+import org.identityconnectors.common.logging.Log;
+import org.identityconnectors.common.security.GuardedString;
+import org.identityconnectors.framework.common.exceptions.*;
+import org.identityconnectors.framework.common.objects.*;
+import org.identityconnectors.framework.common.objects.filter.FilterTranslator;
+import org.identityconnectors.framework.spi.Configuration;
+import org.identityconnectors.framework.spi.ConnectorClass;
+
 import org.identityconnectors.framework.common.objects.ObjectClassInfoBuilder;
 import org.identityconnectors.framework.common.objects.Schema;
 import org.identityconnectors.framework.common.objects.SchemaBuilder;
@@ -30,8 +51,15 @@ import org.identityconnectors.framework.spi.operations.TestOp;
 
 import com.evolveum.polygon.rest.AbstractRestConnector;
 
+import org.identityconnectors.framework.spi.PoolableConnector;
+import org.identityconnectors.framework.spi.operations.*;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
-@ConnectorClass(displayNameKey = "connector.example.rest.display", configurationClass = MyAPIConfiguration.class)
+
+
+@ConnectorClass(displayNameKey = "myapi.rest.display", configurationClass = MyAPIConfiguration.class)
 public class MyAPIConnector extends AbstractRestConnector<MyAPIConfiguration> implements TestOp, SchemaOp {
 
 	 // Déclaration des constantes pour les attributs
