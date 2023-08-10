@@ -13,14 +13,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.evolveum.polygon.connector.example.rest;
+package com.evolveum.polygon.connector.myapi;
 
 import com.evolveum.polygon.rest.AbstractRestConfiguration;
 
-/**
- * @author semancik
- *
- */
+import org.identityconnectors.common.StringUtil;
+import org.identityconnectors.framework.common.exceptions.ConfigurationException;
+import org.identityconnectors.framework.spi.ConfigurationProperty;
+
+
 public class MyAPIConfiguration extends AbstractRestConfiguration {
   private String baseUrl;
 
